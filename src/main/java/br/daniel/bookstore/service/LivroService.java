@@ -2,8 +2,11 @@ package br.daniel.bookstore.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.daniel.bookstore.domain.Categoria;
 import br.daniel.bookstore.domain.Livro;
 import br.daniel.bookstore.repositories.LivroRepository;
 import br.daniel.bookstore.service.exception.ObjectNotFoundException;
@@ -38,6 +41,13 @@ public class LivroService {
 		newObj.setTitulo(obj.getTitulo());
 		newObj.setNome_autor(obj.getNome_autor());
 		newObj.setTexto(obj.getTexto());
+	}
+
+	public Livro create(Integer id_cat, Livro obj) {
+		obj.setId(null);
+		Categoria cat = categoriaService.findById(id_cat);
+		obj.setCategoria(cat);
+		return repository.save(obj);
 	}
 
 }
